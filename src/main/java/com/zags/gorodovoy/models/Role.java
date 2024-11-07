@@ -10,7 +10,7 @@ public class Role {
     private Long id;
 
     @Column(name = "role_name", nullable = false)
-    private String roleName; // "администратор" или "обычный пользователь"
+    private String roleName;
 
     public Role() {}
 

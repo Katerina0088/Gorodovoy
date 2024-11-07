@@ -56,8 +56,10 @@ public class GorodovoyController {
     public String administrator(Model model) {
         try {
             List<Employee> employees  = employeeRepository.findAllEmployees();
+            List<Role> roles = roleRepository.findAllRoles();
 
             model.addAttribute("employees", employees );
+            model.addAttribute("roles", roles );
             return administrator;
         } catch (Exception e) {
             model.addAttribute("errorMessage", "Ошибка при загрузке списка сотрудников: " + e.getMessage());
