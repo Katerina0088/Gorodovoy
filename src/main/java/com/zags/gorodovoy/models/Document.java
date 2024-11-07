@@ -15,8 +15,8 @@ public class Document {
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "request_id", nullable = false)
-    private Request request;
+    @JoinColumn(name = "task_id", nullable = false)
+    private Task task;
 
     private Date creationDate;
 
@@ -41,12 +41,12 @@ public class Document {
         this.user = user;
     }
 
-    public Request getRequest() {
-        return request;
+    public Task getTask() {
+        return task;
     }
 
-    public void setRequest(Request application) {
-        this.request = application;
+    public void setRequest(Task application) {
+        this.task = application;
     }
 
     public Date getCreationDate() {

@@ -16,6 +16,7 @@ public class User {
     @JoinColumn(name = "role_id", nullable = false)
     private Role role;
 
+    private String login;
     private String gender;
     private String firstName;
     private String lastName;
@@ -23,9 +24,10 @@ public class User {
     private Date birthDate;
     private String passportSeries;
     private String passportNumber;
+    private Boolean isAdmin = false;
 
     @OneToMany(mappedBy = "user")
-    private List<Request> requests;
+    private List<Task> tasks;
 
     @OneToMany(mappedBy = "user")
     private List<Document> documents; // Связь с документами
@@ -104,12 +106,20 @@ public class User {
         this.passportNumber = passportNumber;
     }
 
-    public List<Request> getRequests() {
-        return requests;
+    public void login(String login) {
+        this.login = login;
     }
 
-    public void setRequests(List<Request> requests) { // Исправлено имя метода
-        this.requests = requests;
+    public void IsAdmin(Boolean isAdmin) {
+        this.isAdmin = isAdmin;
+    }
+
+    public List<Task> getRequests() {
+        return tasks;
+    }
+
+    public void setRequests(List<Task> tasks) { // Исправлено имя метода
+        this.tasks = tasks;
     }
 
     public List<Document> getDocuments() {

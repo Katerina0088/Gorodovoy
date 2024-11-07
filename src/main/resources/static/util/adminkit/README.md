@@ -125,7 +125,7 @@ adminkit/
 * [Support](https://adminkit.io/support/)
 * [Affiliate Program](https://adminkit.io/affiliate-program)
 
-## Bugs and feature requests
+## Bugs and feature tasks
 
 Found a bug or have a feature request? [Please open a new issue](https://github.com/adminkit/adminkit/issues/new).
 

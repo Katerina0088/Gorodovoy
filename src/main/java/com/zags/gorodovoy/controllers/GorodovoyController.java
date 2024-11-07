@@ -9,7 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -21,7 +20,7 @@ public class GorodovoyController {
     @Autowired // подключаем репозиторий для работы с базой по CRUD
     private DocumentRepository documentRepository;
     @Autowired // подключаем репозиторий для работы с базой по CRUD
-    private RequestRepository requestRepository;
+    private TaskRepository taskRepository;
     @Autowired // подключаем репозиторий для работы с базой по CRUD
     private RoleRepository roleRepository;
     @Autowired // подключаем репозиторий для работы с базой по CRUD
@@ -68,8 +67,8 @@ public class GorodovoyController {
     }
     @GetMapping("/myrequest/{id}")
     public String viewMyRequests(@PathVariable Long userId, Model model) {
-        List<Request> requests = requestRepository.findAllById(userId);
-        model.addAttribute("requests", requests);
+        List<Task> tasks = taskRepository.findAllById(userId);
+        model.addAttribute("requests", tasks);
         return "my-requests";
     }
 

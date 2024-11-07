@@ -6,8 +6,8 @@ import java.util.Date;
 
 
 @Entity
-@Table(name = "request")
-public class Request {
+@Table(name = "task")
+public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -29,7 +29,7 @@ public class Request {
     @Column(name = "status", nullable = false)
     private String status; // "выполнена" или "не выполнена"
 
-    public Request() {}
+    public Task() {}
 
     public Long getId() {
         return id;
