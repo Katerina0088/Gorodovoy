@@ -1,0 +1,22 @@
+.container.main-body .row-cols-3>* {
+    width: 30%;
+
+    background-color: rgb(249, 250, 252);
+    border-radius: 16px;
+    box-shadow: rgba(157, 172, 207, 0.02) -9px -11px 15px, rgba(157, 172, 207, 0.1) 9px 11px 15px;
+    padding: 40px;
+}
+
+.container.main-body .row{
+    gap: 30px;
+}
+
+.text-count {
+    font-weight: 600;
+    font-size: 32px;
+    color: cornflowerblue;
+}
+.main-blocs:hover {
+    transform: scale(1.03);
+    transition: transform 0.3s ease;
+}

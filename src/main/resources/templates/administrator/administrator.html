@@ -1,0 +1,23 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"> <!--// шаблонизатор подключаем, мы его ранее добавили в депенденси -->
+    <head>
+        <title th:text="${title}"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+        <link  href="/util/bootstrap-5.3.3/css/bootstrap.min.css" rel="stylesheet">
+        <script src="/util/bootstrap-5.3.3/js/bootstrap.js"></script>
+
+        <script src="/util/jquery/jquery-3.7.1.min.js"></script>
+        <script src="extensions/editable/bootstrap-table-editable.js"></script>
+
+         <link rel="stylesheet" href="/style/header/header.css">
+         <link rel="stylesheet" href="/style/main.css">
+     </head>
+     <body>
+
+         <div  class="d-flex flex-column bd-highlight mb-1 custom-gap">
+             <header class="bd-highlight" th:insert="~{header :: header}"></header>
+             <bodies class="bd-highlight" th:insert="~{administrator/body/administrator-body :: administrator-body}"> </bodies>
+         </div>
+     </body>
+ </html>

@@ -1,0 +1,10 @@
+body {
+    font-family: Lato-Medium, sans-serif;
+    background: #f8f9fa;
+    color: black;
+    font-size: 18px;
+}
+
+.custom-gap {
+    gap: 56px;
+}

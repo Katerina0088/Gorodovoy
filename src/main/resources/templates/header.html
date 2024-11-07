@@ -1,0 +1,24 @@
+<div th:fragment="header">
+    <nav class="header navbar navbar-light">
+        <div class="container-fluid">
+            <a class="navbar-brand name-project d-flex flex-row bd-highlight mb-1" href="/static">
+                <img class="icon-project" src="/icon/5447.webp" alt="Description of icon">
+                <div class="d-flex flex-column bd-highlight">
+                    <h1 class=" p-2 bd-highlight">ЗАГС</h1>
+                    <h2 class="p-2 bd-highlight">ИНФОРМАЦИОННЫЙ РЕСУРС</h2>
+                </div>
+            </a>
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link link active" aria-current="page" href="/">О проекте</a>
+                </li>
+                <li class="nav-item">
+<!--                    <a th:href="@{/myrequest/{id}(id=${user.id})}" class="nav-link link">Мои заявки</a> <!-->
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link link" href="/administrator">Общий раздел всех заявок (для админов)</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>
