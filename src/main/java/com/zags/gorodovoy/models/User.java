@@ -12,9 +12,8 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "role_id", nullable = false)
-    private Role role;
+    //@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    //private List<Employee> employees;
 
     private String login;
     private String gender;
@@ -42,13 +41,13 @@ public class User {
         this.id = id;
     }
 
-    public Role getRole() {
-        return role;
+   /* public List<Employee> getEmployees() {
+        return employees;
     }
 
-    public void setRole(Role role) {
-        this.role = role;
-    }
+    public void setEmployees(List<Employee> employees) {
+        this.employees = employees;
+    } */
 
     public String getGender() {
         return gender;

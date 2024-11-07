@@ -43,8 +43,6 @@ public class GorodovoyController {
     @GetMapping("/")
     public String home( Model model) { // Model model - обязательный параметр
         try {
-            Iterable<Employee> employees = employeeRepository.findAll();
-            model.addAttribute("employees", employees);
             model.addAttribute("title", "Загс. Главная страница."); // что вернем на эту страницу в виде данных
             return home; // тут просто вызывается шаблон, который вернем
         }
@@ -55,21 +53,22 @@ public class GorodovoyController {
     }
 
     @GetMapping("/administrator")
-    public String administrator ( Model model) { // Model model - обязательный параметр
-        try{
-        Iterable<Employee> employees = employeeRepository.findAll();
-        model.addAttribute("employees", employees);
-        return administrator; // тут просто вызывается шаблон, который вернем
-            } catch (Exception e) {
-        model.addAttribute("errorMessage", "Ошибка при загрузке списка сотрудников: " + e.getMessage());
-        return null;
+    public String administrator(Model model) {
+        try {
+            List<Employee> employees  = employeeRepository.findAllEmployees();
+
+            model.addAttribute("employees", employees );
+            return administrator;
+        } catch (Exception e) {
+            model.addAttribute("errorMessage", "Ошибка при загрузке списка сотрудников: " + e.getMessage());
+            return null;
+        }
     }
-    }
-    @GetMapping("/myrequest/{id}")
+}
+    /*@GetMapping("/myrequest/{id}")
     public String viewMyRequests(@PathVariable Long userId, Model model) {
-        List<Task> tasks = taskRepository.findAllById(userId);
+        List<Task> tasks = TaskRepository.findAllById(userId);
         model.addAttribute("requests", tasks);
         return "my-requests";
-    }
+    }}*/
 
-}

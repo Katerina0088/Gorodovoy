@@ -8,23 +8,24 @@
                 <th scope="col">Имя</th>
                 <th scope="col">Фамилия</th>
                 <th scope="col">Возраст</th>
+                <th scope="col">Роль сотрудника</th>
                 <th scope="col">Действия</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="employee : ${employees}">
-                <th scope="row" th:text="${employee.id}"></th>
-                <td th:text="${employee.firstName}"></td>
-                <td th:text="${employee.lastName}"></td>
-                <td th:text="${employee.birthDate}"></td>
+                <th scope="row" th:text="${employee.user.id}"></th>
+                <td th:text="${employee.user.firstName}"></td>
+                <td th:text="${employee.user.lastName}"></td>
+                <td th:text="${employee.user.birthDate}"></td>
+                <td th:text="${employee.role.roleName}"></td>
                 <td>
-                    <button class="btn btn-primary" th:onclick="'editEmployee(' + ${employee.id} + ')'">Редактировать</button>
-                    <button class="btn btn-danger" th:onclick="'deleteEmployee(' + ${employee.id} + ')'">Удалить</button>
+                    <button class="btn btn-primary edit-employee" th:onclick="'editEmployee(' + ${employee.id} + ')'">Редактировать</button>
+                    <button class="btn btn-danger deleted-employee" th:onclick="'deleteEmployee(' + ${employee.id} + ')'">Удалить</button>
                 </td>
             </tr>
             </tbody>
         </table>
-        <button class="btn btn-success" th:onclick="'addEmployee()'">Добавить сотрудника</button>
+        <button class="btn btn-success add-employee" th:onclick="'addEmployee()'">Добавить сотрудника</button>
     </div>
-    <script src="path/to/administration.js"></script>
 </div>
