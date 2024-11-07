@@ -13,6 +13,7 @@ public class TypeOfService {
 
     public TypeOfService() {}
 
+
     public Long getId() {
         return id;
     }
