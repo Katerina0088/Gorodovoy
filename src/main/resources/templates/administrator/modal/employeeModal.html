@@ -11,21 +11,19 @@
                 <div class="modal-body">
                     <form id="employeeForm">
 
-                            <div class="form-group">
-                                <label for="userList" class="form-label">Пользователи</label>
-                                <input class="form-control" list="dataUser" id="userList" placeholder="Поиск пользователя">
-                                <datalist id="dataUser">
-                                    <option value="San Francisco">
-                                    <option value="New York">
-                                    <option value="Seattle">
-                                    <option value="Los Angeles">
-                                    <option value="Chicago">
-                                </datalist>
-                            </div>
+                        <div class="form-group">
+                            <label for="userList" class="form-label">Пользователи</label>
+                            <input class="form-control" list="dataUser" id="userList" placeholder="Поиск пользователя" data-user-id>
+                            <datalist id="dataUser">
+                                <div th:each="user: ${users}">
+                                    <option class="option-user-modal" th:value="${user.firstName} +' '+ ${user.lastName}" th:data-user-id="${user.id}">
+                                </div>
+                            </datalist>
+                        </div>
 
                         <div class="form-group">
                             <label for="employeeRoleList" class="form-label">Роль сотрудника</label>
-                            <input class="form-control" list="dataRole" id="employeeRoleList" placeholder="Поиск роли">
+                            <input class="form-control" list="dataRole" id="employeeRoleList" placeholder="Поиск роли" data-role-id>
                             <datalist id="dataRole">
                                 <div th:each="role: ${roles}">
                                     <option th:value="${role.roleName}" th:data-role-id="${role.id}">

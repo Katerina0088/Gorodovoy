@@ -1,31 +1,47 @@
 $(document).ready(function() {
-    $('.edit-employee').on('click', function() {
-        editEmployee($(this).closest('tr').find('.id').text());
-    });
-
-    $('.deleted-employee').on('click', function() {
+    $('.save-employee').on('click', saveEmployee);
+    $('.deleted-employee').on('click', () => {
         deleteEmployee($(this).closest('tr').find('.id').text());
     });
 
-    $('.add-employee').on('click', function() {
-        modalEmploee($(this).closest('tr').find('.id').text());
-    });
+    $('.add-employee').on('click', showAddEmployeeModal);
+    $('.close-modal').on('click', hideAddEmployeeModal);
 
-    $('.close-modal').on('click', function() {
-        closeModal();
-    });
+    $('#userList').on('change', updateUserSelectionInModal);
+    $('#employeeRoleList').on('change', updateEmployeeRoleSelectionInModal);
 
-    function addEmployee() {
+
+    function saveEmployee(e) {
+        const userId = $("#userList")[0].dataset.userId,
+            roleId = $("#employeeRoleList")[0].dataset.roleId,
+            employee = {
+                userId: userId ? parseInt(userId) : null,
+                roleId: roleId ? parseInt(roleId) : null
+            };
+
+        if(userId===''){
+            $("#userList").addClass('is-invalid');
+            return;
+        }
+        if(roleId===''){
+            $("#employeeRoleList").addClass('is-invalid');
+            return;
+        }
+
         $.ajax({
-            url: '/add-employee',
+            url: '/employee/add',
             method: 'POST',
-            data: $('#employeeForm').serialize(),
+            contentType: 'application/json',
+            data: JSON.stringify({
+                userId: userId,
+                roleId: roleId
+            }),
             success: function(response) {
                 updateUsersList();
-                $('#editForm').modal('hide');
+                $('#addEmployeeModal').modal('hide');
             },
-            error: function(xhr, status, error) {
-                console.log('Ошибка при добавлении сотрудника');
+            error: function(error) {
+                console.log(`Ошибка сохранения сотрудника \n Erro: ${error.message}`);
             }
         });
     }
@@ -77,11 +93,55 @@ $(document).ready(function() {
         });
     }
 
-    function modalEmploee() {
+    // Work with Modal
+    function showAddEmployeeModal() {
         $('#addEmployeeModal').modal('show');
     }
 
-    function closeModal() {
+    function hideAddEmployeeModal () {
+        $("#employeeRoleList").attr('data-role-id', "").val('').removeClass('is-invalid');
+        $("#userList").attr('data-user-id', "").val('').removeClass('is-invalid');
+
         $('#addEmployeeModal').modal('hide');
+    }
+
+    function updateUserSelectionInModal (e) {
+        const selectedOption = e.target.value;
+
+        if (selectedOption) {
+            const option = $('#dataUser').find(`[value="${selectedOption}"]`);
+            if (option) {
+                const userId = option.attr('data-user-id');
+                if (userId) {
+                    $("#userList").attr('data-user-id', userId);
+                    console.log('ID выбранного пользователя:', userId);
+                } else
+                    console.warn('ID пользователя не найдено в опции');
+            } else
+                console.log('Пользователь не выбран');
+
+        } else
+            console.log('Пользователь не выбран');
+
+    }
+
+    function updateEmployeeRoleSelectionInModal (e) {
+        const selectedOption = e.target.value;
+
+        if (selectedOption) {
+            const option = $('#dataRole').find(`[value="${selectedOption}"]`);
+            if (option) {
+                const roleId = option.attr('data-role-id');
+                if (roleId) {
+                    $("#employeeRoleList").attr('data-role-id', roleId);
+                    console.log('ID выбранной роли:', roleId);
+                } else
+                    console.warn('ID роли не найдено в опции');
+            } else
+                console.log('Роль не выбран');
+
+        } else
+            console.log('Роль не выбран');
+
     }
 });

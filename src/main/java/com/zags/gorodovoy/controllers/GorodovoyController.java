@@ -40,7 +40,7 @@ public class GorodovoyController {
 
     // тут каждая функция обрабатывает определенный url ("/") значит начальная страница.
     // Т.е. при переходе на главную страницу вызывается эта функция
-    @GetMapping("/")
+    @GetMapping({"/","/home"})
     public String home( Model model) { // Model model - обязательный параметр
         try {
             model.addAttribute("title", "Загс. Главная страница."); // что вернем на эту страницу в виде данных
@@ -67,10 +67,4 @@ public class GorodovoyController {
         }
     }
 }
-    /*@GetMapping("/myrequest/{id}")
-    public String viewMyRequests(@PathVariable Long userId, Model model) {
-        List<Task> tasks = TaskRepository.findAllById(userId);
-        model.addAttribute("requests", tasks);
-        return "my-requests";
-    }}*/
 

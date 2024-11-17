@@ -1,13 +1,19 @@
 package com.zags.gorodovoy.models;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import jakarta.persistence.*;
+import lombok.Data;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 
 @Entity
+@Data
 @Table(name = "users")
-public class User {
+public class User  implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -15,7 +21,7 @@ public class User {
     //@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     //private List<Employee> employees;
 
-    private String login;
+    private String username;
     private String gender;
     private String firstName;
     private String lastName;
@@ -105,8 +111,8 @@ public class User {
         this.passportNumber = passportNumber;
     }
 
-    public void login(String login) {
-        this.login = login;
+    public void username(String username) {
+        this.username = username;
     }
 
     public void IsAdmin(Boolean isAdmin) {
@@ -127,5 +133,43 @@ public class User {
 
     public void setDocuments(List<Document> documents) {
         this.documents = documents; // Сеттер для документов
+    }
+
+
+    private String password;
+    private String role;
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        SimpleGrantedAuthority grantedAuthority = new SimpleGrantedAuthority(role);
+        return List.of(grantedAuthority);
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 }
