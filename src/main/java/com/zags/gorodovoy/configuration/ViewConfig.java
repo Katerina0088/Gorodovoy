@@ -9,9 +9,5 @@ public class ViewConfig {
     public String homeView() {
         return "home/home";
     }
-    @Bean(name = "administrator")
-    public String administratorView() {
-        return "administrator/administrator";
-    }
 
 }

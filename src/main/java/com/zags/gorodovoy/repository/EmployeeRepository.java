@@ -18,5 +18,8 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
     @Query("SELECT e FROM Employee e WHERE CONCAT(e.id, e.user, e.role) LIKE %?1%")
     public Iterable<Employee> search(String keyword);
 
+    void deleteByUserId(Long id);
+
+
 }
 
