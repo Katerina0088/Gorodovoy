@@ -24,20 +24,22 @@ public class RegistrationController {
         return "register";
     }
 
-    @PostMapping
-    public String registerUser(@RequestParam (required = true, defaultValue = "!@") String username,
-                               @RequestParam (required = true, defaultValue = "!@") String password) {
-        if(!(username.equals("!@") & password.equals("!@"))) {
-            System.out.println(username + " " + password);
-            User user = new User();
-            user.setUsername(username);
-            user.setPassword(password);
-            if(userService.saveUser(user))
-                System.out.println("GOOD");
-            else
-                System.out.println("BAD");
+    @PostMapping("/register")
+    public String registerUser(@RequestParam(required = true) String username,
+                               @RequestParam(required = true) String password) {
+        if (username.equals("!@") && password.equals("!@")) {
+            return "redirect:/login";
         }
-        return "redirect:/home";
+
+        User user = new User();
+        user.setUsername(username);
+        user.setPassword(password);
+        if (userService.saveUser(user)) {
+            return "redirect:/login";
+        } else {
+            return "redirect:/register";
+        }
     }
+
 
 }

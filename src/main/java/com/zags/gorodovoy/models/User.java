@@ -30,6 +30,8 @@ public class User  implements UserDetails {
     private String passportSeries;
     private String passportNumber;
     private Boolean isAdmin = false;
+    private String password;
+    private String role;
 
     @OneToMany(mappedBy = "user")
     private List<Task> tasks;
@@ -46,14 +48,6 @@ public class User  implements UserDetails {
     public void setId(Long id) {
         this.id = id;
     }
-
-   /* public List<Employee> getEmployees() {
-        return employees;
-    }
-
-    public void setEmployees(List<Employee> employees) {
-        this.employees = employees;
-    } */
 
     public String getGender() {
         return gender;
@@ -111,11 +105,15 @@ public class User  implements UserDetails {
         this.passportNumber = passportNumber;
     }
 
-    public void username(String username) {
+    public void setUsername(String username) {
         this.username = username;
     }
 
-    public void IsAdmin(Boolean isAdmin) {
+    public String getUsername() {
+        return username;
+    }
+
+    public void setIsAdmin(Boolean isAdmin) {
         this.isAdmin = isAdmin;
     }
 
@@ -135,16 +133,18 @@ public class User  implements UserDetails {
         this.documents = documents; // Сеттер для документов
     }
 
-
-    private String password;
-    private String role;
-
     public void setPassword(String password) {
         this.password = password;
+    }
+    public String getPassword() {
+        return password;
     }
 
     public void setRole(String role) {
         this.role = role;
+    }
+    public String getRole() {
+        return role;
     }
 
     @Override

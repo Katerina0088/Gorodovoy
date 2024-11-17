@@ -8,12 +8,29 @@ import org.springframework.stereotype.Service;
 @Service
 public class EmployeeService {  //вывод сотрудников из базы данных
     @Autowired
-    private EmployeeRepository repo;
+    private EmployeeRepository employeeRepository;
 
     public Iterable<Employee> listALl(String keyword) {
         if (keyword != null) {
-            return repo.search(keyword); //Созданный метод в репозитории
+            return employeeRepository.search(keyword); //Созданный метод в репозитории
         }
-        return repo.findAll();
+        return employeeRepository.findAll();
     }
+
+    public void deleteByUserId(Long userId) {
+        try {
+            employeeRepository.deleteByUserId(userId);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to add employee", e);
+        }
+    }
+
+    public void add(Employee employee) {
+        try {
+            employeeRepository.save(employee);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to add employee", e);
+        }
+    }
+
 }

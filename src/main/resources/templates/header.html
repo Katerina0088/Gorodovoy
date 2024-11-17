@@ -18,6 +18,11 @@
                 <li class="nav-item">
                     <a class="nav-link link" href="/administrator">Общий раздел всех заявок (для админов)</a>
                 </li>
+                <div class=" flex-column" >
+                    <div class="bd-highlight">Пользователь:</div>
+                    <div class="bd-highlight" th:text="${userName}">Пользователь:</div>
+                    <a class="nav-link link" href="/logout">Выход</a>
+                </div>
             </ul>
         </div>
     </nav>

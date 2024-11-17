@@ -10,6 +10,11 @@ $(document).ready(function() {
     $('#userList').on('change', updateUserSelectionInModal);
     $('#employeeRoleList').on('change', updateEmployeeRoleSelectionInModal);
 
+    $(document).ajaxSend(function(e, xhr, settings) {
+        const token = $("meta[name='_csrf']").attr("content");
+        const header = $("meta[name='_csrf_header']").attr("content");
+        xhr.setRequestHeader(header, token);
+    });
 
     function saveEmployee(e) {
         const userId = $("#userList")[0].dataset.userId,
@@ -32,10 +37,7 @@ $(document).ready(function() {
             url: '/employee/add',
             method: 'POST',
             contentType: 'application/json',
-            data: JSON.stringify({
-                userId: userId,
-                roleId: roleId
-            }),
+            data: JSON.stringify(employee),
             success: function(response) {
                 updateUsersList();
                 $('#addEmployeeModal').modal('hide');

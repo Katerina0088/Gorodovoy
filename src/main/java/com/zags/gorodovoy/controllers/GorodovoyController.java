@@ -1,5 +1,6 @@
 package com.zags.gorodovoy.controllers;
 
+import com.zags.gorodovoy.Services.UserService;
 import com.zags.gorodovoy.models.*;
 
 import com.zags.gorodovoy.repository.*;
@@ -37,12 +38,16 @@ public class GorodovoyController {
     @Autowired // Подключение конфигурации для наших страниц, чтобы не прописывать путь до них в коде контроллера
     @Qualifier("administrator")
     private String administrator;
+    @Autowired
+    private UserService userService;
 
     // тут каждая функция обрабатывает определенный url ("/") значит начальная страница.
     // Т.е. при переходе на главную страницу вызывается эта функция
     @GetMapping({"/","/home"})
     public String home( Model model) { // Model model - обязательный параметр
         try {
+            String userName = userService.getCurrentUserName();
+            model.addAttribute("userName", userName );
             model.addAttribute("title", "Загс. Главная страница."); // что вернем на эту страницу в виде данных
             return home; // тут просто вызывается шаблон, который вернем
         }
@@ -57,9 +62,13 @@ public class GorodovoyController {
         try {
             List<Employee> employees  = employeeRepository.findAllEmployees();
             List<Role> roles = roleRepository.findAllRoles();
+            List<User> users =  userRepository.findAll();
+            String userName = userService.getCurrentUserName();
 
+            model.addAttribute("userName", userName );
             model.addAttribute("employees", employees );
             model.addAttribute("roles", roles );
+            model.addAttribute("users", users);
             return administrator;
         } catch (Exception e) {
             model.addAttribute("errorMessage", "Ошибка при загрузке списка сотрудников: " + e.getMessage());
