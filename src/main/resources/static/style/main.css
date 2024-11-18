@@ -8,3 +8,21 @@ body {
 .custom-gap {
     gap: 56px;
 }
+
+
+.main-colour{
+    background: cornflowerblue;
+}
+
+.btn-register{
+    color: white;
+}
+
+.btn-register:hover {
+    background-color: rgba(100, 149, 237, 0.8);
+    color: white;
+}
+login-btn:active{
+    border-color: rgba(255, 255, 255, 0);
+    background-color: rgba(100, 149, 237, 0.8);
+}

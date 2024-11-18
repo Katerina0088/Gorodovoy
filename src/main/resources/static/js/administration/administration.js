@@ -1,3 +1,4 @@
+// Функция, которая выполняется, когда документ полностью загружен
 $(document).ready(function() {
     $('.save-employee').on('click', saveEmployee);
     $('.deleted-employee').on('click', () => {
