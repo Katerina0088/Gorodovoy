@@ -2,7 +2,7 @@ package com.zags.gorodovoy.Services;
 
 import com.zags.gorodovoy.models.User;
 import com.zags.gorodovoy.repository.UserRepository;
-import jakarta.servlet.http.HttpServletRequest;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -10,8 +10,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -61,4 +62,21 @@ public class UserService implements UserDetailsService {
         return null;
     }
 
+    public boolean saveUserPrivilegeRole(Long userId, String privilegeRole) {
+        Optional<User> userFromDB = userRepository.findById(userId);
+        if (userFromDB.isEmpty())
+            return false;
+
+        User user = userFromDB.orElse(null);
+
+        user.setRole(privilegeRole);
+        userRepository.save(user);
+
+        return true;
+    }
+
+    public User getUserById(Long id) {
+        return userRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("User not found"));
+    }
 }

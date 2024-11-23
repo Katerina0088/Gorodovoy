@@ -30,6 +30,23 @@
                                 </div>
                             </datalist>
                         </div>
+
+                        <div class="form-group">
+                            <label for="privilegeRoleList" class="form-label">Приватные права</label>
+                            <input class="form-control" list="dataPrivilege" id="privilegeRoleList" placeholder="Выбор прав" data-privilege>
+                            <datalist id="dataPrivilege">
+                                <div>
+                                    <option value="Пользователь" data-privilege="ROLE_USER"></option>
+                                </div>
+                                <div>
+                                    <option value="Админ" data-privilege="ROLE_ADMIN"></option>
+                                </div>
+                                <div>
+                                    <option value="Сотрудник" data-privilege="ROLE_EMPLOYEE"></option>
+                                </div>
+
+                            </datalist>
+                        </div>
                     </form>
                 </div>
                 <div class="modal-footer">

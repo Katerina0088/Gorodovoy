@@ -17,4 +17,9 @@ public class ViewConfig {
     public String administratorView() {
         return "administrator/administrator";
     }
+
+    @Bean(name = "tasks")
+    public String tasksView() {
+        return "tasks/tasks";
+    }
 }

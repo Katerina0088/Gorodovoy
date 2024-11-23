@@ -2,6 +2,7 @@ package com.zags.gorodovoy.Services;
 
 import com.zags.gorodovoy.models.Employee;
 import com.zags.gorodovoy.repository.EmployeeRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,11 +21,11 @@ public class EmployeeService {  //вывод сотрудников из баз�
     public void deleteByUserId(Long userId) {
         try {
             employeeRepository.deleteByUserId(userId);
+
         } catch (Exception e) {
-            throw new RuntimeException("Failed to add employee", e);
+            throw new RuntimeException("Failed to delete employee", e);
         }
     }
-
     public void add(Employee employee) {
         try {
             employeeRepository.save(employee);

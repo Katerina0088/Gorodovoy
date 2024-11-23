@@ -26,10 +26,12 @@ public class Task {
     @JoinColumn(name = "employee_id", nullable = false)
     private Employee employee;
 
-    @Column(name = "status", nullable = false)
-    private String status; // "выполнена" или "не выполнена"
+    @ManyToOne
+    @JoinColumn(name = "status_id", nullable = false)
+    private Status status;
 
-    public Task() {}
+    public Task() {
+    }
 
     public Long getId() {
         return id;
@@ -71,10 +73,13 @@ public class Task {
         this.employee = employee;
     }
 
-    public String getStatus() {
+    public Status getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Status status) {
         this.status = status;
-    }}
+    }
+
+
+}

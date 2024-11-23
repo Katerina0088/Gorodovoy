@@ -1,0 +1,32 @@
+<div th:fragment="tasks-body">
+    <div class="container">
+        <h1>Таблица заявок</h1>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">Идентификатор</th>
+                <th scope="col">ФИО заказчика</th>
+                <th scope="col">Вид услуги</th>
+                <th scope="col">Статус</th>
+                <th scope="col">Фио исполнителя</th>
+
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="task : ${tasks}" th:if="${not #lists.isEmpty(tasks)}">
+                <td th:text="${task.id}"></td>
+                <td th:text="${task.user.firstName + ' ' + task.user.lastName}"></td>
+                <td th:text="${task.service.serviceType}"></td>
+                <td th:text="${task.status}"></td>
+                <td th:text="${task.employee.firstName} + ' ' + ${task.employee.lastName}"></td>
+                <td>
+                    <button class="btn btn-primary edit-task" th:onclick="'editTask(' + ${task.id} + ')'">Редактировать</button>
+                    <button class="btn btn-danger delete-task" th:onclick="'deleteTask(' + ${task.id} + ')'">Удалить</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <p th:if="${#lists.isEmpty(tasks)}">Нет задач.</p>
+        <button class="btn btn-success add-task">Добавить заявку</button>
+    </div>
+</div>

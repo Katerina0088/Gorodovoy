@@ -1,15 +1,16 @@
 // Функция, которая выполняется, когда документ полностью загружен
 $(document).ready(function() {
     $('.save-employee').on('click', saveEmployee);
-    $('.deleted-employee').on('click', () => {
-        deleteEmployee($(this).closest('tr').find('.id').text());
-    });
+    $('.deleted-employee').on('click', deleteEmployee);
+
 
     $('.add-employee').on('click', showAddEmployeeModal);
     $('.close-modal').on('click', hideAddEmployeeModal);
 
     $('#userList').on('change', updateUserSelectionInModal);
     $('#employeeRoleList').on('change', updateEmployeeRoleSelectionInModal);
+    $('#privilegeRoleList').on('change', updatePrivilegeRoleSelectionInModal);
+
 
     $(document).ajaxSend(function(e, xhr, settings) {
         const token = $("meta[name='_csrf']").attr("content");
@@ -20,9 +21,11 @@ $(document).ready(function() {
     function saveEmployee(e) {
         const userId = $("#userList")[0].dataset.userId,
             roleId = $("#employeeRoleList")[0].dataset.roleId,
+            privilegeRole = $("#privilegeRoleList")[0].dataset.privilege,
             employee = {
                 userId: userId ? parseInt(userId) : null,
-                roleId: roleId ? parseInt(roleId) : null
+                roleId: roleId ? parseInt(roleId) : null,
+                privilegeRole: privilegeRole ? privilegeRole: null
             };
 
         if(userId===''){
@@ -38,9 +41,9 @@ $(document).ready(function() {
             url: '/employee/add',
             method: 'POST',
             contentType: 'application/json',
-            data: JSON.stringify(employee),
+            data: JSON.stringify( {employee:employee, privilegeRole:privilegeRole }),
             success: function(response) {
-                updateUsersList();
+                //updateUsersList();
                 $('#addEmployeeModal').modal('hide');
             },
             error: function(error) {
@@ -67,33 +70,30 @@ $(document).ready(function() {
         });
     }
 
-    function deleteEmployee(userId) {
-        if (confirm('Вы уверены, что хотите удалить этого сотрудника?')) {
+    function deleteEmployee(e) {
+        const userId = e.currentTarget.dataset.userId ? parseInt(e.currentTarget.dataset.userId): null;
+        const userName = e.currentTarget.dataset.userName ? e.currentTarget.dataset.userName: null;
+        if (userId != null && confirm("Вы уверены, что хотите удалить сотрудника  " + userName + "?")) {
             $.ajax({
-                url: '/delete-employee',
-                method: 'POST',
-                data: { userId: userId },
-                success: function(response) {
-                    updateUsersList();
+                url: '/employee/deleted',
+                method: 'DELETE',
+                contentType: 'application/json',
+                data: JSON.stringify(userId ),
+                success: function(data) {
+                    if (data) {
+                        alert('Сотрудник успешно удален');
+                        // Обновите список сотрудников после удаления
+                        //refreshEmployeeList();
+                    } else {
+                        alert('Ошибка при удалении сотрудника');
+                    }
                 },
                 error: function(xhr, status, error) {
-                    console.log('Ошибка при удалении сотрудника');
+                    console.error('Ошибка при удалении сотрудника:', error);
+                    alert('Произошла ошибка при удалении сотрудника');
                 }
             });
         }
-    }
-
-    function updateUsersList() {
-        $.ajax({
-            url: '/get-users-in-employee',
-            method: 'GET',
-            success: function(response) {
-                $('#usersInEmployee').empty().append(response);
-            },
-            error: function(xhr, status, error) {
-                console.log('Ошибка при получении списка пользователей');
-            }
-        });
     }
 
     // Work with Modal
@@ -104,6 +104,7 @@ $(document).ready(function() {
     function hideAddEmployeeModal () {
         $("#employeeRoleList").attr('data-role-id', "").val('').removeClass('is-invalid');
         $("#userList").attr('data-user-id', "").val('').removeClass('is-invalid');
+        $('#privilegeRoleList').attr('data-privilege', "").val('').removeClass('is-invalid')
 
         $('#addEmployeeModal').modal('hide');
     }
@@ -145,6 +146,26 @@ $(document).ready(function() {
 
         } else
             console.log('Роль не выбран');
+
+    }
+
+    function updatePrivilegeRoleSelectionInModal (e) {
+        const selectedOption = e.target.value;
+
+        if (selectedOption) {
+            const option = $('#dataPrivilege').find(`[value="${selectedOption}"]`);
+            if (option) {
+                const privilegeRole = option.attr('data-privilege');
+                if (privilegeRole) {
+                    $("#privilegeRoleList").attr('data-privilege', privilegeRole);
+                    console.log('privilegeRole выбранного пользователя:', privilegeRole);
+                } else
+                    console.warn('privilegeRole пользователя не найдено в опции');
+            } else
+                console.log('privilegeRole не выбран');
+
+        } else
+            console.log('privilegeRole не выбран');
 
     }
 });

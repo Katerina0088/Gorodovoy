@@ -1,4 +1,5 @@
 <div th:fragment="header">
+    <script type="module" src="/js/header/header.js"></script>
     <nav class="header navbar navbar-light">
         <div class="container-fluid">
             <a class="navbar-brand name-project d-flex flex-row bd-highlight mb-1" href="/static">
@@ -17,12 +18,14 @@
     <!--                    <a th:href="@{/myrequest/{id}(id=${user.id})}" class="nav-link link">Мои заявки</a> <!-->
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link link" href="/administrator">Общий раздел всех заявок (для админов)</a>
+                        <a class="nav-link link" href="/administrator">Сотрудники</a>
                     </li>
-                    <div class=" flex-column" >
-                        <div class="bd-highlight">Пользователь:</div>
-                        <div class="bd-highlight" th:text="${userName}">Пользователь:</div>
-                        <a class="nav-link link" href="/logout">Выход</a>
+                    <li class="nav-item">
+                        <a class="nav-link link" href="/tasks">Заявки</a>
+                    </li>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2">Пользователь: <strong th:text="${userName}"></strong></span>
+                        <a class="btn btn-outline-danger" href="/logout">Выход</a>
                     </div>
                 </ul>
             </div>

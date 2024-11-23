@@ -7,8 +7,9 @@
                 <th scope="col">Идентификатор</th>
                 <th scope="col">Имя</th>
                 <th scope="col">Фамилия</th>
-                <th scope="col">Возраст</th>
+                <th scope="col">Дата рождения</th>
                 <th scope="col">Роль сотрудника</th>
+                <th scope="col">Роль привилегий</th>
                 <th scope="col">Действия</th>
             </tr>
             </thead>
@@ -19,9 +20,10 @@
                 <td th:text="${employee.user.lastName}"></td>
                 <td th:text="${employee.user.birthDate}"></td>
                 <td th:text="${employee.role.roleName}"></td>
+                <td th:text="${employee.user.role}"></td>
                 <td>
-                    <button class="btn btn-primary edit-employee" th:onclick="'editEmployee(' + ${employee.id} + ')'">Редактировать</button>
-                    <button class="btn btn-danger deleted-employee" th:onclick="'deleteEmployee(' + ${employee.id} + ')'">Удалить</button>
+                    <button class="btn btn-primary edit-employee" th:data-employee="${employee.id}+'-'+${employee.user.id}+'-'+${employee.role.id}+'-'+${employee.user.role}">Редактировать</button>
+                    <button class="btn btn-danger deleted-employee" th:data-user-id="${employee.user.id}"  th:data-user-name="${employee.user.firstName}+' '+${employee.user.lastName}" >Удалить</button>
                 </td>
             </tr>
             </tbody>
