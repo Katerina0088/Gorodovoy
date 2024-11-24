@@ -43,6 +43,7 @@ public class WebSecurityConfig {
                         // Разрешаем доступ к статическим ресурсам (стили, скрипты, утилиты и иконки) для пользователей и администраторов
                         .requestMatchers("/style/**", "/js/**", "/util/**", "/icon/**").permitAll()//.hasAnyRole("USER", "ADMIN")
                         .requestMatchers("/register**", "/login**").permitAll()
+                        .requestMatchers("/administrator**").hasAnyRole( "EMPLOYEE","ADMIN")
                         // Требуем аутентификации для всех остальных запросов
                         .anyRequest().authenticated()
                 )

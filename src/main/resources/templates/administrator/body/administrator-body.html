@@ -14,7 +14,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="employee : ${employees}">
+            <tr th:each="employee : ${employees}" th:class="'employee-id-'+${employee.id}">
                 <th scope="row" th:text="${employee.user.id}"></th>
                 <td th:text="${employee.user.firstName}"></td>
                 <td th:text="${employee.user.lastName}"></td>

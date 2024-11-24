@@ -6,6 +6,8 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class EmployeeService {  //вывод сотрудников из базы данных
     @Autowired
@@ -26,6 +28,7 @@ public class EmployeeService {  //вывод сотрудников из баз�
             throw new RuntimeException("Failed to delete employee", e);
         }
     }
+
     public void add(Employee employee) {
         try {
             employeeRepository.save(employee);
@@ -34,4 +37,13 @@ public class EmployeeService {  //вывод сотрудников из баз�
         }
     }
 
+    public List<Employee> getAll() {
+        try {
+            List<Employee> employees  = employeeRepository.findAllEmployees();
+
+            return  employees;
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to get All employee", e);
+        }
+    }
 }

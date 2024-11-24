@@ -26,3 +26,9 @@ login-btn:active{
     border-color: rgba(255, 255, 255, 0);
     background-color: rgba(100, 149, 237, 0.8);
 }
+
+.main-success{
+    position: fixed;
+    top: 90%;
+    left: 2%;
+}

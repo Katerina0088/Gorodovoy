@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/employee")
 public class EmployeeController {
@@ -19,6 +21,15 @@ public class EmployeeController {
     @Autowired
     private UserService userService;
 
+    @GetMapping("/list")
+    public ResponseEntity<List<Employee>> getAllEmployees() {
+        try {
+            List<Employee> employeesList = employeeService.getAll();
+            return ResponseEntity.ok(employeesList);
+        } catch (Exception e) {
+            return null;
+        }
+    }
 
     @PostMapping("/add")
     public ResponseEntity<String> addEmployee( @RequestBody employeePrivilegeReq employeePrivilegeReq) {
