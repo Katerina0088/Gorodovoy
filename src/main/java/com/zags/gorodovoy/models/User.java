@@ -33,11 +33,7 @@ public class User  implements UserDetails {
     private String password;
     private String role;
 
-    @OneToMany(mappedBy = "user")
-    private List<Task> tasks;
 
-    @OneToMany(mappedBy = "user")
-    private List<Document> documents; // Связь с документами
 
     public User() {}
 
@@ -117,21 +113,9 @@ public class User  implements UserDetails {
         this.isAdmin = isAdmin;
     }
 
-    public List<Task> getRequests() {
-        return tasks;
-    }
 
-    public void setRequests(List<Task> tasks) { // Исправлено имя метода
-        this.tasks = tasks;
-    }
 
-    public List<Document> getDocuments() {
-        return documents; // Геттер для документов
-    }
 
-    public void setDocuments(List<Document> documents) {
-        this.documents = documents; // Сеттер для документов
-    }
 
     public void setPassword(String password) {
         this.password = password;

@@ -1,4 +1,4 @@
-<div th:fragment="tasksModal">
+<div th:fragment="tasksModal" xmlns:sec="http://www.w3.org/1999/xhtml">
     <div id="taskModal" class="modal fade" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -6,13 +6,67 @@
                     <h5 class="modal-title">Создать заявку</h5>
                     <button type="button" class="close-modal btn-close" data-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
-                    Late..
+
+                <div class="modal-body taskForm">
+                    <form id="taskForm">
+                        <div class="form-group">
+                            <label for="userList" class="form-label">Заказчик</label>
+
+                            <!-- Блок if -->
+                                <input sec:authorize="hasAnyRole('USER')" class="form-control" list="dataUser" id="userList" placeholder="Поиск пользователя"
+                                       th:data-user-id="${currentUser.id}"
+                                       th:value="${currentUser.firstName} + ' ' + ${currentUser.lastName}" readonly>
+
+                            <!-- Блок unless (если if не выполнился) -->
+
+                                <input sec:authorize="hasAnyRole('ADMIN', 'EMPLOYEE')" class="form-control" list="dataUser" id="userList" placeholder="Поиск пользователя" data-user-id>
+
+                            <datalist id="dataUser">
+                                <th:block th:each="user : ${users}">
+                                    <option class="option-user-modal"
+                                            th:value="${user.firstName} + ' ' + ${user.lastName}"
+                                            th:data-user-id="${user.id}"></option>
+                                </th:block>
+                            </datalist>
+                        </div>
+
+
+
+                        <div class="form-group">
+                            <label for="typeOfServiceList" class="form-label">Вид услуги</label>
+                            <input class="form-control" list="dataTypeOfService" id="typeOfServiceList" placeholder="Поиск услуги" data-service-id>
+                            <datalist id="dataTypeOfService">
+                                <div th:each="service: ${typeOfServices}">
+                                    <option th:value="${service.serviceType}" th:data-service-id="${service.id}">
+                                </div>
+                            </datalist>
+                        </div>
+
+                        <div class="form-group " sec:authorize="hasAnyRole('ADMIN', 'EMPLOYEE')">
+                            <label for="statusList" class="form-label">Статус</label>
+                            <input class="form-control" list="dataStatus" id="statusList" placeholder="Поиск статуса" data-status-id>
+                            <datalist id="dataStatus">
+                                <div th:each="status: ${statuses}">
+                                    <option th:value="${status.statusName}" th:data-status-id="${status.id}">
+                                </div>
+                            </datalist>
+                        </div>
+
+                        <div class="form-group" sec:authorize="hasAnyRole('ADMIN', 'EMPLOYEE')">
+                            <label for="userEmployeeList" class="form-label">Сотрудники</label>
+                            <input class="form-control" list="dataUserEmployee" id="userEmployeeList" placeholder="Поиск сотрудника" data-user-employee-id>
+                            <datalist id="dataUserEmployee">
+                                <div th:each="employee: ${employees}">
+                                    <option class="option-user-modal" th:value="${employee.user.firstName} +' '+ ${employee.user.lastName}" th:data-user-employee-id="${employee.id}">
+                                </div>
+                            </datalist>
+                        </div>
+                    </form>
                 </div>
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary close-modal">Закрыть</button>
-                    <button type="submit" class="btn btn-primary save-task" id="saveTask">Сохранить</button>
+                    <button type="submit" class="btn btn-primary modal-button-save">Сохранить</button>
                 </div>
             </div>
         </div>

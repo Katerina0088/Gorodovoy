@@ -1,9 +1,12 @@
 package com.zags.gorodovoy.controllers.EmployeeController;
 
 import com.zags.gorodovoy.Services.EmployeeService;
+import com.zags.gorodovoy.Services.TaskService;
 import com.zags.gorodovoy.Services.UserService;
+import com.zags.gorodovoy.dtoModels.TaskFilter;
 import com.zags.gorodovoy.dtoModels.employeePrivilegeReq;
 import com.zags.gorodovoy.models.Employee;
+import com.zags.gorodovoy.models.Task;
 import com.zags.gorodovoy.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,6 +23,8 @@ public class EmployeeController {
     private EmployeeService employeeService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private TaskService taskService;
 
     @GetMapping("/list")
     public ResponseEntity<List<Employee>> getAllEmployees() {
@@ -49,6 +54,19 @@ public class EmployeeController {
     @DeleteMapping("/deleted")
     public ResponseEntity<String> deleteEmployee( @RequestBody Long userId) {
         try{
+            Long emploueeId = employeeService.getEmployeeByUserId(userId);
+            TaskFilter taskFilter = new TaskFilter();
+            taskFilter.setEmployeeId(emploueeId);
+            List<Task>tasks = taskService.getTasksByFilters(taskFilter);
+
+            for (Task task : tasks) {
+                task.setEmployeeId(null);
+
+                taskService.updateTask(task);
+
+            }
+
+
             employeeService.deleteByUserId(userId);
             userService.saveUserPrivilegeRole(userId, "ROLE_USER");
 

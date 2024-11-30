@@ -1,12 +1,12 @@
 <div th:fragment="main-body">
-    <div class="container main-body">
+    <div class="container main-body" th:data-countServiceRastBrak="${countServiceRastBrak}" th:data-countServiceBrak="${countServiceBrak}">
         <div class="row row-cols-3">
             <div class="col d-flex flex-column bd-highlight main-blocs">
                 <div class="p-2 bd-highlight">
                     Зарегистрировано обращений
                 </div>
                 <div class="p-2 d-flex justify-content-between bd-highlight">
-                    <div class="bd-highlight text-count">
+                    <div class="bd-highlight text-count" th:text="${countTasks}"></t>
                         3
                     </div>
                     <div class="bd-highlight" style="
@@ -30,7 +30,7 @@
                     Скорость ответа
                 </div>
                 <div class="p-2 d-flex justify-content-between bd-highlight">
-                    <div class="bd-highlight text-count">
+                    <div class="bd-highlight text-count" th:text="${avgDateTimeTask} + ' ч.'">
                         3
                     </div>
                     <div class="bd-highlight" style="
@@ -49,7 +49,7 @@
                     Обработано записей
                 </div>
                 <div class="p-2 d-flex justify-content-between bd-highlight">
-                    <div class="bd-highlight text-count">
+                    <div class="bd-highlight text-count"  th:text="${countReadyTasks}">
                         3
                     </div>
                     <div class="bd-highlight" style="

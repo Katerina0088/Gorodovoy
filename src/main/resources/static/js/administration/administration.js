@@ -57,6 +57,9 @@ $(document).ready(function() {
             }
         });
     }
+
+
+
     function deleteEmployee(e) {
         const userId = e.currentTarget.dataset.userId ? parseInt(e.currentTarget.dataset.userId): null;
         const userName = e.currentTarget.dataset.userName ? e.currentTarget.dataset.userName: null;
@@ -88,7 +91,6 @@ $(document).ready(function() {
     function showAddEmployeeModal() {
         $('#employeeModal').modal('show');
     }
-
     function showEditEmployeeModal(e){
 
         const employeeString = e.currentTarget.dataset.employee;
@@ -133,7 +135,6 @@ $(document).ready(function() {
 
         $('#employeeModal').modal('show');
     }
-
     function hideAddEmployeeModal () {
         $("#employeeRoleList").attr('data-role-id', "").val('').removeClass('is-invalid');
         $("#userList").attr('data-user-id', "").val('').removeClass('is-invalid');

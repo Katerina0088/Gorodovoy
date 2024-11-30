@@ -1,6 +1,58 @@
 <div th:fragment="tasks-body">
     <div class="container">
-        <h1>Таблица заявок</h1>
+
+        <!-- Filter Container -->
+        <div class="filter-container" style="border: 1px solid #ccc; padding: 20px; margin-bottom: 20px; border-radius: 5px; background-color: #f9f9f9;">
+            <h2>Поиск по параметрам:</h2>
+            <form id="taskFilterForm">
+                <div class="form-group">
+                    <label for="userFilter">Заказчик:</label>
+                    <select id="userFilter" class="form-control">
+                        <option value=""></option>
+
+                        <!-- Если пользователь имеет роль ADMIN или EMPLOYEE -->
+                        <option th:if="${#authorization.expression('hasAnyRole(''ADMIN'', ''EMPLOYEE'')')}"
+                                th:each="user: ${users}"
+                                th:value="${user.id}"
+                                th:text="${user.firstName} + ' ' + ${user.lastName}">
+                        </option>
+
+                        <!-- Если пользователь имеет роль USER -->
+                        <option th:if="${#authorization.expression('hasRole(''USER'')')}"
+                                th:value="${currentUser.id}"
+                                th:text="${currentUser.firstName} + ' ' + ${currentUser.lastName}">
+                        </option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="statusFilter">Статус:</label>
+                    <select id="statusFilter" class="form-control">
+                        <option value=""></option>
+                        <option th:each="status : ${statuses}" th:value="${status.id}" th:text="${status.statusName}"></option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="serviceFilter">Вид услуги:</label>
+                    <select id="serviceFilter" class="form-control">
+                        <option value=""></option>
+                        <option th:each="service : ${typeOfServices}" th:value="${service.id}" th:text="${service.serviceType}"></option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="employeeFilter">Исполнитель:</label>
+                    <select id="employeeFilter" class="form-control">
+                        <option value=""></option>
+                        <option th:each="employee : ${employees}" th:value="${employee.id}" th:text="${employee.user.firstName + ' ' + employee.user.lastName}"></option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-primary task-filter-search">Поиск</button>
+            </form>
+        </div>
+        <h1>Все заявки</h1>
         <table class="table table-striped">
             <thead>
             <tr>
@@ -9,7 +61,7 @@
                 <th scope="col">Вид услуги</th>
                 <th scope="col">Статус</th>
                 <th scope="col">Фио исполнителя</th>
-
+                <th scope="col">Действия</th>
             </tr>
             </thead>
             <tbody>
@@ -17,11 +69,13 @@
                 <td th:text="${task.id}"></td>
                 <td th:text="${task.user.firstName + ' ' + task.user.lastName}"></td>
                 <td th:text="${task.service.serviceType}"></td>
-                <td th:text="${task.status}"></td>
-                <td th:text="${task.employee.firstName} + ' ' + ${task.employee.lastName}"></td>
+                <td th:text="${task.status.statusName}"></td>
+                <td th:with="employee=${task.employee}">
+                    <span th:if="${employee != null}" th:text="${employee.user.firstName + ' ' + employee.user.lastName}"/>
+                </td>
                 <td>
-                    <button class="btn btn-primary edit-task" th:onclick="'editTask(' + ${task.id} + ')'">Редактировать</button>
-                    <button class="btn btn-danger delete-task" th:onclick="'deleteTask(' + ${task.id} + ')'">Удалить</button>
+                    <button class="btn btn-primary edit-task" th:data-task="${task.id}+'-'+${task.user.id}+'-'+${task.service.id}+'-'+${task.status.id}+'-'+${task.employee?.id}">Редактировать</button>
+                    <button class="btn btn-danger deleted-task" th:data-task-id="${task.id}"  th:data-task-name="${task.service.serviceType}" >Удалить</button>
                 </td>
             </tr>
             </tbody>

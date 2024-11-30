@@ -1,10 +1,14 @@
 package com.zags.gorodovoy.models;
 
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.util.Date;
 
 
+@Data
 @Entity
 @Table(name = "task")
 public class Task {
@@ -12,74 +16,51 @@ public class Task {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @ManyToOne(fetch = FetchType.EAGER )
+    @JoinColumn(name = "user_id", insertable = false, updatable = false)
     private User user;
 
-    @ManyToOne
-    @JoinColumn(name = "service_id", nullable = false)
-    private TypeOfService service; // Связь с видом услуги
+    @Column(name = "user_id", nullable = false)
+    private Long userId;
 
-    private Date requestDate;
+    @Column(name = "date_create")
+    private Date dateCreate;
 
-    @ManyToOne
-    @JoinColumn(name = "employee_id", nullable = false)
+    @Column(name = "date_edite")
+    private Date dateEdit;
+
+    @Column(name = "date_start")
+    private Date dateStart;
+
+    @Column(name = "date_finish")
+    private Date dateFinish;
+
+    @ManyToOne(fetch = FetchType.EAGER )
+    @JoinColumn(name = "employee_id", insertable = false, updatable = false)
     private Employee employee;
 
-    @ManyToOne
-    @JoinColumn(name = "status_id", nullable = false)
+    @Column(name = "employee_id", nullable = true)
+    private Long employeeId;
+
+    @ManyToOne(fetch = FetchType.EAGER )
+    @JoinColumn(name = "service_id", insertable = false, updatable = false)
+    private TypeOfService service;
+
+    @Column(name = "service_id", nullable = false)
+    private Long serviceId;
+
+    @ManyToOne(fetch = FetchType.EAGER )
+    @JoinColumn(name = "status_id", insertable = false, updatable = false)
     private Status status;
 
-    public Task() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public TypeOfService getService() {
-        return service;
-    }
-
-    public void setService(TypeOfService service) {
-        this.service = service;
-    }
-
-    public Date getRequestDate() {
-        return requestDate;
-    }
-
-    public void setRequestDate(Date applicationDate) {
-        this.requestDate = applicationDate;
-    }
-
-    public Employee getEmployee() {
-        return employee;
-    }
-
-    public void setEmployee(Employee employee) {
-        this.employee = employee;
-    }
-
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
-    }
+    @Column(name = "status_id", nullable = false)
+    private Long statusId;
 
 
+    public Task() {}
+    private Date requestDate;
 }
+
+
+
+

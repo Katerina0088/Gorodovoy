@@ -26,19 +26,7 @@
              <modal class="bd-highlight" th:insert="~{administrator/modal/employeeModal :: employeeModal}"> </modal>
          </div>
 
-         <div id="successAlert" class="alert alert-success main-success d-none" role="alert">
-             <div class="alert-message">
-                 <strong>Успех операции.</strong>
-                 <button type="button" class="btn-close"></button>
-             </div>
-         </div>
-
-         <div id="dangerAlert" class="alert alert-danger main-success d-none" role="alert">
-             <div class="alert-message">
-                 <strong>Операция завершилась с ошибкой.</strong>
-                 <button type="button" class="btn-close"></button>
-             </div>
-         </div>
+         <div th:insert="~{alert :: alert}"> </div>
 
      </body>
  </html>

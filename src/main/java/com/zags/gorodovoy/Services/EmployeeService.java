@@ -37,6 +37,14 @@ public class EmployeeService {  //вывод сотрудников из баз�
         }
     }
 
+    public long getEmployeeByUserId(long userId) {
+        try {
+           return employeeRepository.getEmployeeByUserId(userId);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to get employee id", e);
+        }
+    }
+
     public List<Employee> getAll() {
         try {
             List<Employee> employees  = employeeRepository.findAllEmployees();

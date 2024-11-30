@@ -26,4 +26,6 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
     @Query("SELECT e FROM Employee e WHERE CONCAT(e.id, e.user, e.role) LIKE %?1%")
     public Iterable<Employee> search(String keyword);
 
+    @Query("SELECT e.id FROM Employee e WHERE e.userId = :userId")
+    Long getEmployeeByUserId(@Param("userId") Long userId);
 }

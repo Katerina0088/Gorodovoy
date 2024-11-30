@@ -62,6 +62,15 @@ public class UserService implements UserDetailsService {
         return null;
     }
 
+
+    public User getCurrentUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.getPrincipal() instanceof User) {
+            return ((User) authentication.getPrincipal());
+        }
+        return null;
+    }
+
     public boolean saveUserPrivilegeRole(Long userId, String privilegeRole) {
         Optional<User> userFromDB = userRepository.findById(userId);
         if (userFromDB.isEmpty())
